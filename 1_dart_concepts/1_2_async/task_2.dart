@@ -53,8 +53,27 @@ class DisconnectedException implements Exception {}
 
 class Client {
   Future<void> connect(Server server) async {
-    // TODO: Implement backoff re-connecting.
-    //       Data from the [server] should be printed to the console.
+    const int maxDelayInMilliseconds = 4000;
+    const int initialDelayInMilliseconds = 500;
+    int delayInMilliseconds = initialDelayInMilliseconds;
+    while (true) {
+      try {
+        var stream = await server.connect();
+        print('Подключение установлено. Получаем данные:');
+        delayInMilliseconds = initialDelayInMilliseconds;
+        await for (var data in stream) {
+          print(data);
+        }
+      } on DisconnectedException {
+        if (delayInMilliseconds < maxDelayInMilliseconds) {
+          delayInMilliseconds *= 2;
+        }
+        print(
+          'Ошибка подключения, переподключение через ${delayInMilliseconds / 1000} сек.',
+        );
+        await Future.delayed(Duration(milliseconds: delayInMilliseconds));
+      }
+    }
   }
 }
 

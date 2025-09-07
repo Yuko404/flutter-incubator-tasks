@@ -1,5 +1,10 @@
+import 'dart:async';
+
 /// Collection of [messages] allowed to be [read].
 class Chat {
+  // Добавляем таймер для проверки, запущен
+  // ли таймер, перед запуском метода [onRead]
+  Timer? _timer;
   Chat(this.onRead);
 
   /// Callback, called when this [Chat] should be marked as read until the
@@ -13,9 +18,10 @@ class Chat {
 
   /// Marks this [Chat] as read until the specified [message].
   void read(int message) {
-    // TODO: [onRead] should be invoked no more than 1 time in a second.
-
-    onRead(message);
+    _timer?.cancel();
+    _timer = Timer(Duration(seconds: 1), () {
+      onRead(message);
+    });
   }
 }
 
