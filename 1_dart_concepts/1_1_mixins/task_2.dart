@@ -1,6 +1,6 @@
 extension on String {
   List<String> parseLinks() {
-    /// Задаём структуры ссылки
+    // Задаём структуры ссылки
     final RegExp exp = RegExp(
       r'(?:(?:https?|ftp):\/\/)?[\w/\-?=%.]+\.[\w/\-?=%.#&:]+',
     );
@@ -8,14 +8,14 @@ extension on String {
     final List<String> result = [];
     int cursor = 0;
 
-    /// Определяем функцию для добавления в список с проверкой на пустоту
+    // Определяем функцию для добавления в список с проверкой на пустоту
     void addPart(String type, int startOfPart, int endOfPart) {
       final String part = substring(startOfPart, endOfPart);
       if (part.isEmpty) {
         return;
       }
 
-      /// Проверяем правильность ссылки через [Uri.tryParse]
+      // Проверяем правильность ссылки через [Uri.tryParse]
       if (type == 'Link') {
         final Uri? parsingUrl = Uri.tryParse(part);
         if (parsingUrl == null) {
@@ -25,8 +25,8 @@ extension on String {
       result.add('$type(\'$part\')');
     }
 
-    /// Добавляем части текста последовательно, используя курсор
-    /// для отслеживания позиции
+    // Добавляем части текста последовательно, используя курсор
+    // для отслеживания позиции
     for (final RegExpMatch match in matches) {
       addPart('Text', cursor, match.start);
       cursor = match.end;
@@ -36,7 +36,7 @@ extension on String {
       addPart('Link', match.start, cursor);
     }
 
-    /// Не забываем добавить оставшуюся часть текста
+    // Не забываем добавить оставшуюся часть текста
     addPart('Text', cursor, length);
     return result;
   }
