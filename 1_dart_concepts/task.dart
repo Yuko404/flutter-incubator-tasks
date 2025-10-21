@@ -99,4 +99,5 @@ Future<void> main() async {
   print(await dataBaseIntStr.getKeys());
   print(await dataBaseIntStr.getValues());
   print(await dataBaseIntStr.hasValueOnKey(7));
+  dataBaseIntStr.dispose();
 }
