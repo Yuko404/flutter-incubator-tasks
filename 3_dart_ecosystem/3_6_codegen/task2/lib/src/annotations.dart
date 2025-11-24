@@ -1,0 +1,3 @@
+class JsonSerializableForTask {
+  const JsonSerializableForTask();
+}

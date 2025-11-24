@@ -1,0 +1,7 @@
+builders:
+  jsonBuilder:
+    import: "package:task2/builder.dart"
+    builder_factories: ["jsonBuilder"]
+    build_extensions: {".dart": [".my.dart"]}
+    auto_apply: dependents
+    build_to: source

@@ -1,0 +1,9 @@
+builders:
+  lines_builder:
+    import: "package:task1/builder.dart"
+    builder_factories: ["linesBuilder"]
+    build_extensions:
+      "$package$":
+        - "summary.g"
+    auto_apply: none
+    build_to: source
